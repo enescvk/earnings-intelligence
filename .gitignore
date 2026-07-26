@@ -10,9 +10,13 @@ __pycache__/
 
 # Generated reports
 data/reports/
+transcripts/
 
 # macOS
 .DS_Store
 
 # VS Code settings (optional)
 .vscode/
+
+# Personal development notes
+notes/
