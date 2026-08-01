@@ -1,5 +1,7 @@
 from src.prompts import build_report_prompt
 from src.llm import generate_response
+from src.report_writer import save_report
+
 
 
 def main():
@@ -11,7 +13,7 @@ def main():
 
     report = generate_response(prompt)
 
-    print(report)
+    save_report(report, "NVDA_Q1_2027.md")
 
 
 if __name__ == "__main__":

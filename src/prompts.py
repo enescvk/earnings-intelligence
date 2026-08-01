@@ -6,9 +6,19 @@ def build_report_prompt(transcript: str) -> str:
     prompt = f"""
 You are an experienced equity research analyst.
 
+-------------------------
+BEGIN TRANSCRIPT
+-------------------------
+
+{transcript}
+
+-------------------------
+END TRANSCRIPT
+-------------------------
+
 Analyze the following earnings call transcript and generate a professional investment research report.
 
-Your report should include the following sections:
+Return your report using EXACTLY the following Markdown headings in this exact order:
 
 # Executive Summary
 
@@ -16,7 +26,7 @@ Summarize the quarter in 2-3 paragraphs.
 
 # Financial Highlights
 
-List the most important financial metrics discussed.
+Summarize the most important financial metrics discussed, such as revenue, EPS, margins, operating income, cash flow, guidance, or other key performance indicators mentioned by management.
 
 # Positive Developments
 
@@ -40,23 +50,19 @@ Summarize management's outlook for future quarters.
 
 # Key Quotes
 
-Extract 3-5 important quotes from management.
+Extract 3–5 short, impactful quotes from management that best reflect the company's strategy, outlook, or performance.
 
 # Management Confidence
 
 Give a confidence score from 1-10 and explain your reasoning.
 
-Instructions:
+Rules:
 
-- Be objective.
+- Use only information from the transcript.
 - Do not speculate.
-- Base every conclusion only on the transcript.
-- If information is not discussed, state "Not discussed."
-- Format the report using Markdown headings and bullet points.
-
-Transcript:
-
-{transcript}
+- Do not invent facts.
+- If a section cannot be completed from the transcript, write "Not discussed."
+- Do not omit any section.
 """
 
     return prompt
