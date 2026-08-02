@@ -1,9 +1,5 @@
-def build_report_prompt(transcript: str) -> str:
-    """
-    Creates the prompt that will be sent to the LLM.
-    """
-
-    prompt = f"""
+class ReportPrompt:
+    TEMPLATE = """
 You are an experienced equity research analyst.
 
 -------------------------
@@ -115,4 +111,48 @@ Before returning your answer, verify that:
 - No information is repeated across sections.
 """
 
-    return prompt
+    @classmethod
+    def build(cls, transcript: str) -> str:
+        return cls.TEMPLATE.format(transcript=transcript)
+
+
+class MetadataPrompt:
+    TEMPLATE = """
+    -------------------------
+    BEGIN TRANSCRIPT
+    -------------------------
+
+    {transcript}
+
+    -------------------------
+    END TRANSCRIPT
+    -------------------------
+
+    Extract the following metadata from the earnings call transcript.
+
+    Return ONLY valid JSON.
+
+    Do not explain anything.
+
+    Do not summarize the transcript.
+
+    Do not wrap the JSON inside markdown.
+
+    If a value cannot be determined, return null.
+
+    Return this exact JSON schema:
+
+    {{
+        "company": "",
+        "ticker": "",
+        "quarter": "",
+        "fiscal_year": "",
+        "call_date": "",
+        "ceo": "",
+        "cfo": ""
+    }}
+    """
+
+    @classmethod
+    def build(cls, transcript: str) -> str:
+        return cls.TEMPLATE.format(transcript=transcript)

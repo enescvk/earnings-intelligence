@@ -1,19 +1,23 @@
-from src.prompts import build_report_prompt
+from src.prompts import ReportPrompt
+from src.metadata import extract_metadata
 from src.llm import generate_response
 from src.report_writer import save_report
 
 
-
 def main():
 
-    with open("transcripts/nvidia.txt", "r", encoding="utf-8") as file:
+    with open("transcripts/Apple.txt", "r", encoding="utf-8") as file:
         transcript = file.read()
 
-    prompt = build_report_prompt(transcript)
+    metadata = extract_metadata(transcript)
 
-    report = generate_response(prompt)
+    print(metadata)
 
-    save_report(report, "NVDA_Q1_2027.md")
+    report_prompt = ReportPrompt.build(transcript)
+
+    report = generate_response(report_prompt)
+
+    save_report(report, metadata.filename)
 
 
 if __name__ == "__main__":
