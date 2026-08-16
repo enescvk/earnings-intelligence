@@ -133,23 +133,65 @@ class MetadataPrompt:
     Return ONLY valid JSON.
 
     Do not explain anything.
-
     Do not summarize the transcript.
-
     Do not wrap the JSON inside markdown.
 
-    If a value cannot be determined, return null.
+    If a value cannot be determined from the transcript, return null.
+
+    IMPORTANT INSTRUCTIONS FOR FISCAL YEAR AND QUARTER:
+
+    The earnings period may be expressed in many different ways.
+
+    Quarter examples include:
+    - Q1, Q2, Q3, Q4
+    - First Quarter, Second Quarter, Third Quarter, Fourth Quarter
+    - 1st Quarter, 2nd Quarter, 3rd Quarter, 4th Quarter
+    - First quarter of fiscal year 2026
+    - FY26 Fourth Quarter
+    - FY2026 Q4
+
+    Normalize the quarter to exactly one of:
+    - Q1
+    - Q2
+    - Q3
+    - Q4
+
+    For example:
+    - "First Quarter" -> "Q1"
+    - "Second Quarter" -> "Q2"
+    - "Third Quarter" -> "Q3"
+    - "Fourth Quarter" -> "Q4"
+    - "FY26 Fourth Quarter" -> "Q4"
+
+    Fiscal year may be expressed as:
+    - FY26
+    - FY 26
+    - FY2026
+    - FY 2026
+    - fiscal year 2026
+    - fiscal 2026
+
+    Normalize the fiscal year to the four-digit year.
+
+    For example:
+    - "FY26" -> "2026"
+    - "FY 26" -> "2026"
+    - "FY2026" -> "2026"
+    - "FY 2026" -> "2026"
+
+    Pay particular attention to the title and opening section of the transcript,
+    as earnings-call titles frequently contain the fiscal year and quarter.
 
     Return this exact JSON schema:
 
     {{
-        "company": "",
-        "ticker": "",
-        "quarter": "",
-        "fiscal_year": "",
-        "call_date": "",
-        "ceo": "",
-        "cfo": ""
+        "company": null,
+        "ticker": null,
+        "quarter": null,
+        "fiscal_year": null,
+        "call_date": null,
+        "ceo": null,
+        "cfo": null
     }}
     """
 

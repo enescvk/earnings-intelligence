@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from src.prompts import ReportPrompt
 from src.metadata import extract_metadata
 from src.llm import generate_response
@@ -6,10 +8,14 @@ from src.report_writer import save_report
 
 def main():
 
-    with open("transcripts/Apple.txt", "r", encoding="utf-8") as file:
+    transcript_path = Path("transcripts/Microsoft.txt")
+
+    with open(transcript_path, "r", encoding="utf-8") as file:
         transcript = file.read()
 
-    metadata = extract_metadata(transcript)
+    transcript_name = transcript_path.stem
+
+    metadata = extract_metadata(transcript, transcript_name)
 
     print(metadata)
 
